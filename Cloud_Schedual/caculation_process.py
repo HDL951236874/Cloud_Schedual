@@ -5,13 +5,13 @@ there are some funcs
 import csv
 import pickle
 import random
-from OPOS import *
+from Cloud_Schedual.OPOS import *
 
 import matplotlib.pyplot as plt
 import numpy as np
 from sympy import *
 
-import parameter_list
+import Cloud_Schedual.parameter_list
 
 def price_up(num):
     '''
