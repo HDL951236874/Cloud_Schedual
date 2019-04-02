@@ -63,7 +63,7 @@ def private_cloud(l):
             mem_record += member[1]
             num_tasks += 1
             time_of_task += member[2]
-            if core_record >= parameter_list.CPUmax or mem_record >= parameter_list.MEMmax:
+            if core_record >= Cloud_Schedual.parameter_list.CPUmax or mem_record >= Cloud_Schedual.parameter_list.MEMmax:
                 break
         private_num_list.append(num_tasks)
         private_running_time.append(time_of_task)
