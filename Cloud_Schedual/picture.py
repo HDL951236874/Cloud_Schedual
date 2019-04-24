@@ -102,7 +102,7 @@ def pic3():
     y9 = [0.1 * 0.01 * exp(0.00006 * x) / (0.1 + 0.01 * (exp(0.00006 * x) - 1)) for x in x]
     y10 = [0.1 * 0.01 * exp(0.00001 * x) / (0.1 + 0.01 * (exp(0.00001 * x) - 1)) for x in x]
     y11 = [0.1 * 0.01 * exp(0.00002 * x) / (0.1 + 0.01 * (exp(0.00002 * x) - 1)) for x in x]
-    plt.plot([1531 for i in range(len(y))],y, c='black',linestyle = "--" ,linewidth = 1)
+    plt.plot([1531 for i in range   (len(y))],y, c='black',linestyle = "--" ,linewidth = 1)
     plt.plot([11316 for i in range(len(y))],y, c='black',linestyle = "--",linewidth = 1)
     plt.plot([14459 for i in range(len(y))],y, c='black',linestyle = "--",linewidth = 1)
     plt.plot([17351 for i in range(len(y))],y, c='black',linestyle = "--",linewidth = 1)
@@ -393,4 +393,4 @@ def pic11():
     plt.show()
 
 if __name__ == '__main__':
-    pic10()
+    pic3()
