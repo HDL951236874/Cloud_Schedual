@@ -85,7 +85,12 @@ def ICOAO(l, hour, pn, prt, m, n, ln):
     cost_spot_instance = int(sum(n)) * 7.5 * (0.03)
     # print("SP_cost "+str(cost_spot_instance))
     # cost = (cost_private + on_demand_cost + cost_spot_instance)/ 60 + int(int(max(n))/200)*10+50
-    cost = (cost_private + on_demand_cost + cost_spot_instance)/ 60 + int(max(n)/20) * 0.3
+    excost = 0
+    if int(max(n)/20)<20: excost = int(max(n)/20)*0.8
+    if 20<=int(max(n)/20)<40: excost = (int(max(n)/20)-20)*1.0+20*0.8
+    if 40<=int(max(n)/20)<60: excost = (int(max(n)/20)-40)*1.2+20*0.8+20*1.0
+
+    cost = (cost_private + on_demand_cost + cost_spot_instance)/ 60 + excost
     # print("cost "+str(cost))
     reward = 0.48 * (OD_time + sum(SP_time_1)+sum(SP_time_2)+ prta) / 60
     # print("reward "+str(reward))
