@@ -181,7 +181,7 @@ def OPOS(l, hour, pn, pr, ln, limite):
 
     pp.init_first_max_pos_and_profiit()
     iter_time = 0
-    max_iter_time = 300
+    max_iter_time = 50
 
     while iter_time <= max_iter_time:
         w = 1.0 - iter_time * (1.0 - 0.2) / 150
