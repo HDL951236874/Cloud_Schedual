@@ -84,7 +84,7 @@ def ICOAO(l, hour, pn, prt, m, n, ln):
     # print(up_rate)
     uprise = []
     for index in n:
-        up_date_time_slot =0.01+ 0.01 * 0.1 * np.exp(0.0018 * int(index)) / (0.1 + 0.01 * (np.exp(0.0018 * int(index)) - 1))
+        up_date_time_slot =0.02+ 0.01 * 0.1 * np.exp(0.000272 * int(index)) / (0.1 + 0.01 * (np.exp(0.000272 * int(index)) - 1))
         uprise.append(up_date_time_slot*int(index))
 
     # print("SP_cost "+str(cost_spot_instance))
@@ -94,7 +94,8 @@ def ICOAO(l, hour, pn, prt, m, n, ln):
     if 20<=int(max(n)/20)<40: excost = (int(max(n)/20)-20)*1.0+20*0.8
     if 40<=int(max(n)/20): excost = (int(max(n)/20)-40)*1.2+20*0.8+20*1.0
 
-    cost = (cost_private + on_demand_cost + sum(uprise))/ 60 + excost
+    # cost = (cost_private + on_demand_cost + sum(uprise))/ 60 + excost
+    cost = (cost_private + on_demand_cost + sum(uprise))/ 60
     # print("cost "+str(cost))
     reward = 0.48 * (OD_time + sum(SP_time_1)+sum(SP_time_2)+ prta) / 60
     # print("reward "+str(reward))

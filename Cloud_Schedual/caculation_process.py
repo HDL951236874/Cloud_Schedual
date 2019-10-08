@@ -70,12 +70,22 @@ def private_cloud(l):
     return private_num_list, private_running_time
 
 
+def calculate_instance(L):
+    l = []
+    for i in L:
+        sum = 0
+        for j in i:
+            sum += j[-1]
+        l.append(sum/5)
+
+    return l
+
 if __name__ == '__main__':
     pkl_file = open('data_middle.pkl', 'rb')
 
     LIST = pickle.load(pkl_file)
-
-    print([len(x) for x in LIST])
+    # print(calculate_instance(LIST))
+    # print([len(x) for x in LIST])
     private_num_list, private_running_time = private_cloud(LIST)
 
     Limite = limite(LIST,private_num_list)
@@ -83,8 +93,14 @@ if __name__ == '__main__':
     Limite__ = []
     for index in Limite_:
         Limite__.append(max(index))
-    print(Limite__)
+    # print(Limite__)
 
+
+    # S = []
+    # for i in range(48):
+    #     S.append(sum(x[2] for x in LIST[i][private_num_list[i]+1:])/7.5)
+    #
+    # print(S)
     last_num = 0
     a_list = []
     b_list = []
