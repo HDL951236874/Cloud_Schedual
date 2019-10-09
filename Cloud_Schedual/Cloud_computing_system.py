@@ -35,6 +35,9 @@ class Cloud_computing_System():
         self.population_pool = []
         self.l = l
         self.num_l = self.private_cloud(self.l)
+        self.best_pool = []
+        self.best_for_all = []
+
 
     class population_templete():
         def __init__(self, val):
@@ -56,13 +59,16 @@ class Cloud_computing_System():
 
             max_score = 0
             max_score_pop = None
-            for pop in self.population_pool:
+            for pop in self.best_pool:
                 if pop.score > max_score:
                     max_score = pop.score
                     max_score_pop = pop
+            self.best_for_all.append(max_score_pop)
+            self.best_pool = []
             print(sum(private_time[i*8:i*8+8])*0.48/60)
             print(max_score)
             print([int(x,2) for x in max_score_pop.binary_list])
+            print("=============================================")
 
     def GAengine(self,l,num_l):
         # self.population_pool = self.population_init(self.group_size)
@@ -86,6 +92,16 @@ class Cloud_computing_System():
         for i in range(len(self.population_pool)):
             gene = [int(x,2) for x in self.population_pool[i].binary_list]
             self.population_pool[i].score = self.fitness(gene,l,num_l,self.B)
+
+        max_score = 0
+        max_pop = None
+        for pop in self.population_pool:
+            if pop.score>=max_score:
+                max_score = pop.score
+                max_pop = pop
+
+        self.best_pool.append(max_pop)
+
 
 
     def selection(self):
@@ -224,25 +240,42 @@ class Cloud_computing_System():
 
             sp_time_list.append(time)
             sp_num_list.append(num)
-        print(sp_time_list)
+        # print(sp_time_list)
         # print(sp_num_list)
         # print(sp_successfully_bid)
         od_cost = sum(od_time_list) * 0.1
         sp_cost = sum([sp_successfully_bid[x] * (0.01 + price_up_rate[x]) for x in range(len(price_up_rate))])
 
         profit = 0.48 * (sum(od_time_list) + sum(sp_time_list))
-        print('profit'+str(profit))
-        print('od'+str(od_cost))
-        print('sp'+str(sp_cost))
+        # print('profit'+str(profit))
+        # print('od'+str(od_cost))
+        # print('sp'+str(sp_cost))
         return (profit - od_cost - sp_cost)/60
 
+    def make_the_instance_number_plot(self):
+        import matplotlib.pyplot as plt
+        od_ = []
+        sp_ = []
+        score = []
+        for pop in self.best_for_all:
+            od_ += [int(pop.binary_list[0],2) for _ in range(self.time_slot_number)]
+            sp_ += [int(x,2) for x in pop.binary_list[1:]]
+            score.append(pop.score)
+        plt.plot([x for x in range(len(od_))],od_,marker='o')
+        plt.plot([x for x in range(len(sp_))],sp_,marker='o')
+        # plt.bar([], score, width=0.4, color='b')
+        print(score)
+        plt.show()
+
+# 374.98470058373977,368.20129987048836,395.63622721275453,382.22204657668095,381.2339864359745,372.59091593095917
 if __name__ == '__main__':
     import os
-    print(os.getcwd())
+    # print(os.getcwd())
     pkl_file = open('data_middle.pkl', 'rb')
     LIST = pickle.load(pkl_file)
     SYS = Cloud_computing_System(LIST)
-    # SYS.run()
+    SYS.run()
+    SYS.make_the_instance_number_plot()
     # finish_by_time(SYS.l[0:8],SYS.num_l)
     # gene = [0, 1075, 1279, 1082, 1018, 1054, 1231, 852, 1299]
     gene = [0, 1512, 1750, 1600, 1664, 1512, 1670, 1680, 1770]
@@ -250,10 +283,13 @@ if __name__ == '__main__':
     up_gene = [0,1508, 1911, 1520, 1409, 1471, 1807, 1141, 1957]
     down_gene = [0,4101, 3813, 4092, 4167, 4125, 3890, 4338, 3778]
     import matplotlib.pyplot as plt
-    plt.plot([x for x in range(8)],gene[1:9])
-    plt.plot([x for x in range(8)],up_gene[1:9])
-    plt.plot([x for x in range(8)],down_gene[1:9])
-    plt.show()
+    # plt.plot([x for x in range(8)],gene[1:9])
+    # plt.plot([x for x in range(8)],up_gene[1:9])
+    # plt.plot([x for x in range(8)],down_gene[1:9])
+    # plt.show()
+
 
     print(SYS.fitness(down_gene,SYS.l[0:8],SYS.num_l[0:8],2))
+    print(SYS.fitness(up_gene,SYS.l[0:8],SYS.num_l[0:8],2))
+    print(SYS.fitness(gene,SYS.l[0:8],SYS.num_l[0:8],2))
     # print(SYS.fitness(up_gene,SYS.l[0:8],SYS.num_l[0:8],2))
